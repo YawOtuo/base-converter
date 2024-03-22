@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
+import Home from "./components/Home";
 
 const inter = Inter({ subsets: ["latin"] });
+const mont = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={mont.className}>
+        <div className="grid grid-cols-5 h-[100vh] ">
+          <div className="h-full hidden lg:flex flex-col items-center justify-center px-4 bg-yellow1 text-3xl font-semibold">
+            Convert number to any base of choice
+          </div>
+          <div className="col-span-5 lg:col-span-4">{children}</div>
+        </div>
+      </body>
     </html>
   );
 }
