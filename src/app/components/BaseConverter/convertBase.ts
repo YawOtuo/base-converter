@@ -1,6 +1,46 @@
-export const convertBase = (number : number, base : number) => {
+export const convertToBase10 = (number: number, base: number) => {
+  // Check if the number or base is not provided or invalid
+  if (
+    number === undefined ||
+    base === undefined ||
+    isNaN(number) ||
+    isNaN(base)
+  ) {
+    return NaN;
+  }
+
+  // Convert the number to string and split it into individual digits
+  const digits = `${number}`.split("");
+
+  // Initialize the result to store the decimal equivalent
+  let result = 0;
+
+  // Iterate through each digit of the number
+  for (let i = 0; i < digits.length; i++) {
+    // Convert each digit to its decimal value
+    let digitValue = parseInt(digits[i], base);
+
+    // If the digit value is NaN, return NaN
+    if (isNaN(digitValue)) {
+      return NaN;
+    }
+
+    // Multiply the digit value by the base raised to the power of its position
+    result += digitValue * Math.pow(base, digits.length - i - 1);
+  }
+
+  // Return the final decimal result
+  return result;
+};
+
+export const convertBase = (number: number, base: number) => {
   // Mapping remainders greater than 9 to letters
-  const map : any = {
+
+  if (number == 0) {
+    console.log("number is 0");
+    return "0";
+  }
+  const map: any = {
     10: "A",
     11: "B",
     12: "C",

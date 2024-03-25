@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Home from "./components/Home";
+import useHome from "./components/useHome";
+import LayoutSideText from "./components/LayoutSideText";
 
 const inter = Inter({ subsets: ["latin"] });
 const mont = Montserrat({ subsets: ["latin"] });
@@ -20,10 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={mont.className}>
-        <div className="grid grid-cols-5 h-[100vh] ">
-          <div className="h-full hidden lg:flex flex-col items-center justify-center px-4 bg-yellow1 text-3xl font-semibold">
-            Convert number to any base of choice
-          </div>
+        <div className="grid grid-cols-5 h-[100vh] text-black ">
+          <LayoutSideText />
           <div className="col-span-5 lg:col-span-4">{children}</div>
         </div>
       </body>

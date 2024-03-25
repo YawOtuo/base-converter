@@ -4,12 +4,14 @@ import { Input } from "@nextui-org/react";
 type Props = {
   placeholder: string;
   name: string;
-  value?: string;
+  value?: any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   autoFocus?: boolean;
   label: string;
-  type?: any
+  type?: any;
+  error: string | null;
+  className?: string;
 };
 
 function TextInput({
@@ -19,11 +21,14 @@ function TextInput({
   onChange,
   disabled,
   autoFocus,
-  type="text",
+  type = "text",
+  error,
   label,
+  className,
 }: Props) {
   return (
-    <div className="flex flex-col  gap-2 capitalize">
+    <div className={`flex flex-col  gap-2 capitalize ${className}`}>
+      {error && <p className="text-sm text-gray-600">{error}</p>}
       <p>{label}</p>
       <Input
         classNames={{

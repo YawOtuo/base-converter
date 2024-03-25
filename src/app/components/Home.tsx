@@ -3,11 +3,14 @@
 import { NextUIProvider, Tab, Tabs } from "@nextui-org/react";
 import BaseCalculator from "./BaseCalculator";
 import BaseConverter from "./BaseConverter";
+import useHome from "./useHome";
 
 function Home({ children }: any) {
+  const { currentView, setCurrentView } = useHome();
   return (
     <div>
       <Tabs
+        onSelectionChange={(key) => setCurrentView(key)}
         variant="light"
         aria-label="Tabs variants"
         // radius="full"
@@ -18,12 +21,7 @@ function Home({ children }: any) {
           tabContent:
             "text-shade-300 text-[1rem] capitalize group-data-[selected=true]:text-black group-data-[selected=true]:font-semibold ",
           cursor: "!border-b-yellow1  border-b-2 text-shade-50 ",
-        }}
-        // selectedKey={"base-calculator"}
-        // onSelectionChange={(selectedOption) =>
-        //   handleOptionChange(selectedOption)
-        // }
-      >
+        }}>
         <Tab
           key="base-converter"
           title={

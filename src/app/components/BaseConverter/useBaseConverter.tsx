@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { convertBase } from "./convertBase";
+import { convertBase, convertToBase10 } from "./convertBase";
 
 function useBaseConverter() {
   const [result, setResult] = useState<string>();
@@ -13,9 +13,12 @@ function useBaseConverter() {
     });
   };
 
-  const getAnswer = (number: number, base: number) => {
-    setNumberBase(base);
-    const ans: string = convertBase(number, base);
+  const getAnswer = (from_base: number, number: number, to_base: number) => {
+    setNumberBase(to_base);
+
+    const convertedToBasetenValue = convertToBase10(number, from_base);
+
+    const ans: string = convertBase(convertedToBasetenValue, to_base);
     setResult(ans);
 
     scrollToBottom();
