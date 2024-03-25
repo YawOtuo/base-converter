@@ -1,6 +1,6 @@
 export const convertBase = (number : number, base : number) => {
   // Mapping remainders greater than 9 to letters
-  const map = {
+  const map : any = {
     10: "A",
     11: "B",
     12: "C",

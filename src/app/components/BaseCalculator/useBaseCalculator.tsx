@@ -21,7 +21,7 @@ function useBaseCalculator() {
     base: number
   ) => {
     setNumberBase(base);
-    const ans: number = calculateResult(number1, operation, number2);
+    const ans: any = calculateResult(number1, operation, number2);
 
     const converted_ans: string = convertBase(ans, base);
     setResult(converted_ans);
