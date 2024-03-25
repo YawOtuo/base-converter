@@ -4,14 +4,18 @@ type Props = {
   label: string;
   onClick?: any;
   variant: "convert";
+  type?: any;
 };
 
-function CustomButton({ label, onClick, variant }: Props) {
+function CustomButton({ label, onClick, variant, type = "button" }: Props) {
   const options: any = {
-    "convert": "bg-yellow1 py-2 !rounded-0",
+    convert: "bg-yellow1 py-2 !rounded-0",
   };
   return (
-    <Button className={`${options[variant]} font-semibold w-full`} onPress={onClick}>
+    <Button
+      className={`${options[variant]} font-semibold w-full`}
+      onPress={onClick}
+      type={type}>
       {label}
     </Button>
   );

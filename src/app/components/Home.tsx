@@ -25,15 +25,6 @@ function Home({ children }: any) {
         // }
       >
         <Tab
-          key="base-calculator"
-          title={
-            <div className="flex items-center gap-2.5">
-              <p>Base Calculator</p>
-            </div>
-          }>
-          <BaseCalculator />
-        </Tab>
-        <Tab
           key="base-converter"
           title={
             <div className="flex items-center  gap-2.5 ">
@@ -41,6 +32,15 @@ function Home({ children }: any) {
             </div>
           }>
           <BaseConverter />
+        </Tab>
+        <Tab
+          key="base-calculator"
+          title={
+            <div className="flex items-center gap-2.5">
+              <p>Base Calculator</p>
+            </div>
+          }>
+          <BaseCalculator />
         </Tab>
       </Tabs>
     </div>

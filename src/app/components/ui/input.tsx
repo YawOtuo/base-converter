@@ -9,6 +9,7 @@ type Props = {
   disabled?: boolean;
   autoFocus?: boolean;
   label: string;
+  type?: any
 };
 
 function TextInput({
@@ -18,6 +19,7 @@ function TextInput({
   onChange,
   disabled,
   autoFocus,
+  type="text",
   label,
 }: Props) {
   return (
@@ -25,8 +27,9 @@ function TextInput({
       <p>{label}</p>
       <Input
         classNames={{
-          input: ["py-20"],
+          input: [""],
         }}
+        type={type}
         placeholder={placeholder}
         name={name}
         value={value}

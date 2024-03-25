@@ -1,15 +1,21 @@
-import TextInput from "./ui/input";
+import TextInput from "../ui/input";
 import { Form, Formik } from "formik";
 
-import CustomButton from "./ui/Button";
+import CustomButton from "../ui/Button";
+import useBaseConverter from "./useBaseConverter";
+import BaseResultSquare from "../BaseResultSquare";
 
 function BaseConverter() {
+  const { getAnswer, result, numberBase } = useBaseConverter();
   return (
     <div className="grid grid-cols-1  lg:grid-cols-2 h-full py-10 px-10 gap-10">
       <Formik
-        initialValues={{}}
-        onSubmit={() => {
-          console.log("first");
+        initialValues={{
+          number: 0,
+          base: 10,
+        }}
+        onSubmit={(values) => {
+          getAnswer(values?.number, values?.base);
         }}>
         {({ handleChange }) => (
           <Form className="flex flex-col gap-5 ">
@@ -28,15 +34,13 @@ function BaseConverter() {
             />
 
             <div className="mt-4 w-full">
-              <CustomButton label="Convert" variant="convert" />
+              <CustomButton type={"submit"} label="Convert" variant="convert" />
             </div>
           </Form>
         )}
       </Formik>
 
-      <div className="w-full h-full min-h-[40vh] bg-yellow2 flex text-center items-center justify-center rounded-md">
-        <p className="text-xl font-semibold">100001</p>
-      </div>
+      <BaseResultSquare  result={result} numberBase={numberBase}/>
     </div>
   );
 }
