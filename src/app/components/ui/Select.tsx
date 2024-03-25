@@ -10,9 +10,9 @@ export default function CustomSelect({ data, label, onChange }: Props) {
   return (
     <div className="flex flex-col  w-full flex-wrap md:flex-nowrap gap-2">
       <p className="">{label}</p>
-      <Select onChange={(e) => onChange(e.target.value)} label="Select an operation" className="">
+      <Select variant="bordered" onChange={(e) => onChange(e.target.value)} label="Select an operation" className="">
         {data.map((ele : any) => (
-          <SelectItem key={ele.value} value={ele.value}>
+          <SelectItem variant="bordered" key={ele.value} value={ele.value}>
             {ele.label}
           </SelectItem>
         ))}

@@ -37,6 +37,7 @@ function TextInput({
         type={type}
         placeholder={placeholder}
         name={name}
+        variant="bordered"
         value={value}
         onChange={onChange}
         disabled={disabled}
