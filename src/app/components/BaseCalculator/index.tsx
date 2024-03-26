@@ -8,48 +8,17 @@ import CustomSelect from "../ui/Select";
 import { useState } from "react";
 
 function BaseCalculator() {
-  const { generateResult, result, numberBase } = useBaseCalculator();
+  const { generateResult, result, numberBase, error, setError } =
+    useBaseCalculator();
   const [operation, setOperation] = useState<string>("+");
 
   const validationSchema = Yup.object().shape({
-    number1: Yup.number()
-      .required("Number is required")
-      .test(
-        "valid-for-base",
-        "Invalid number for selected base",
-        function (value) {
-          const base : number = this.resolve(Yup.ref("base"));
-          const numberString = value?.toString();
-
-          // Check if each digit is less than the base
-          const isValidNumber = numberString
-            .split("")
-            .every((digit) => parseInt(digit, 10) < base);
-
-          return isValidNumber;
-        }
-      ),
-
-    number2: Yup.number()
-      .required("Number is required")
-      .test(
-        "valid-for-base",
-        "Invalid number for selected base",
-        function (value) {
-          const base : any = this.resolve(Yup.ref("base"));
-          const numberString = value?.toString();
-
-          // Check if each digit is less than the base
-          const isValidNumber = numberString
-            .split("")
-            .every((digit) => parseInt(digit, 10) < base);
-
-          return isValidNumber;
-        }
-      ),
+    number1: Yup.string().required("Number is required"),
+    number2: Yup.string().required("Number is required"),
     operation: Yup.string().required("Operation is required"),
     base: Yup.number()
       .min(2, "Minimum base is 2")
+      .max(26, "Maximum base is 26")
       .required("From base is required"),
   });
   return (
@@ -57,13 +26,13 @@ function BaseCalculator() {
       <Formik
         validationSchema={validationSchema}
         initialValues={{
-          number1: 0,
+          number1: "0",
           operation: "+",
-          number2: 0,
+          number2: "0",
           base: 10,
         }}
         onSubmit={(values) => {
-          values.operation = operation
+          values.operation = operation;
           console.log("first");
           generateResult(
             values?.number1,
@@ -74,6 +43,8 @@ function BaseCalculator() {
         }}>
         {({ handleChange, values, errors }) => (
           <Form className="flex flex-col gap-5 ">
+            <div className="text-red-900">{error}</div>
+
             <TextInput
               error={errors.base ? errors.base : null}
               type={"number"}
@@ -84,7 +55,6 @@ function BaseCalculator() {
               label="base"
             />
             <TextInput
-              type={"number"}
               name="number1"
               onChange={handleChange}
               placeholder="number"
@@ -94,7 +64,7 @@ function BaseCalculator() {
             />
 
             <CustomSelect
-              onChange={(value : any) => {
+              onChange={(value: any) => {
                 setOperation(value);
               }}
               label="Operation"
@@ -119,7 +89,6 @@ function BaseCalculator() {
             />
 
             <TextInput
-              type={"number"}
               name="number2"
               onChange={handleChange}
               placeholder="number"

@@ -9,32 +9,20 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import * as Yup from "yup";
 
 function BaseConverter() {
-  const { getAnswer, result, numberBase } = useBaseConverter();
+  const { getAnswer, result, numberBase, error, setError } = useBaseConverter();
 
   const validationSchema = Yup.object().shape({
-    number1: Yup.number()
-      .required("Number is required")
-      .test(
-        "valid-for-base",
-        "Invalid number for selected base",
-        function (value) {
-          const fromBase: any = this.resolve(Yup.ref("from_base"));
-          const numberString = value?.toString();
-
-          // Check if each digit is less than the base
-          const isValidNumber = numberString
-            .split("")
-            .every((digit) => parseInt(digit, 10) < fromBase);
-
-          return isValidNumber;
-        }
-      ),
+    number1: Yup.string().required("Number is required"),
     from_base: Yup.number()
       .min(2, "Minimum base is 2")
+      .max(26, "Maximum base is 26")
+
       .required("From base is required"),
 
     to_base: Yup.number()
       .min(2, "Minimum base is 2")
+      .max(26, "Maximum base is 26")
+
       .required("To base is required"),
   });
 
@@ -43,7 +31,7 @@ function BaseConverter() {
       <Formik
         validationSchema={validationSchema}
         initialValues={{
-          number1: 0,
+          number1: "0",
           from_base: 10,
           to_base: 2,
         }}
@@ -52,11 +40,16 @@ function BaseConverter() {
         }}>
         {({ handleChange, values, errors, touched }) => (
           <Form className="flex flex-col gap-5 w-full justify-center">
+            <div className="text-red-900">{error}</div>
+
             <div className="flex items-center justify-center gap-5 w-full">
               <TextInput
                 className="w-full"
                 name="number1"
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setError("");
+                }}
                 placeholder="number"
                 label="Number"
                 value={values?.number1}

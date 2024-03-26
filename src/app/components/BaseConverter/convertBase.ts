@@ -1,85 +1,105 @@
-export const convertToBase10 = (number: number, base: number) => {
-  // Check if the number or base is not provided or invalid
-  if (
-    number === undefined ||
-    base === undefined ||
-    isNaN(number) ||
-    isNaN(base)
-  ) {
+export const map: any = {
+  10: "A",
+  11: "B",
+  12: "C",
+  13: "D",
+  14: "E",
+  15: "F",
+  16: "G",
+  17: "H",
+  18: "I",
+  19: "J",
+  20: "K",
+  21: "L",
+  22: "M",
+  23: "N",
+  24: "O",
+  25: "P",
+  26: "Q", // Extend as needed
+};
+export const convertToBase10 = (number: string, base: number) => {
+  if (number === undefined || base === undefined || isNaN(base)) {
     return NaN;
   }
 
-  // Convert the number to string and split it into individual digits
-  const digits = `${number}`.split("");
+  const dotIndex = number.indexOf(".");
+  let integerPart = number;
+  let fractionalPart = "";
 
-  // Initialize the result to store the decimal equivalent
-  let result = 0;
-
-  // Iterate through each digit of the number
-  for (let i = 0; i < digits.length; i++) {
-    // Convert each digit to its decimal value
-    let digitValue = parseInt(digits[i], base);
-
-    // If the digit value is NaN, return NaN
-    if (isNaN(digitValue)) {
-      return NaN;
-    }
-
-    // Multiply the digit value by the base raised to the power of its position
-    result += digitValue * Math.pow(base, digits.length - i - 1);
+  // Split the number into integer and fractional parts if there is a decimal point
+  if (dotIndex !== -1) {
+    integerPart = number.substring(0, dotIndex);
+    fractionalPart = number.substring(dotIndex + 1);
   }
 
-  // Return the final decimal result
-  return result;
+  // Convert the integer part to base 10
+  let integerResult = 0;
+  for (let i = 0; i < integerPart.length; i++) {
+    let digit  : any = integerPart[i];
+    if (digit >= "0" && digit <= "9") {
+      digit = Number(digit);
+    } else {
+      digit = map[digit.toUpperCase()];
+    }
+    if (digit >= base) {
+      return NaN; // Invalid digit for the specified base
+    }
+    integerResult += digit * Math.pow(base, integerPart.length - i - 1);
+  }
+
+  // Convert the fractional part to base 10
+  let fractionalResult = 0;
+  for (let i = 0; i < fractionalPart.length; i++) {
+    let digit : any = fractionalPart[i];
+    if (digit >= "0" && digit <= "9") {
+      digit = Number(digit);
+    } else {
+      digit = map[digit.toUpperCase()];
+    }
+    if (digit >= base) {
+      return NaN; // Invalid digit for the specified base
+    }
+    fractionalResult += digit * Math.pow(base, -(i + 1));
+  }
+
+  // Combine the integer and fractional parts
+  return integerResult + fractionalResult;
 };
 
 export const convertBase = (number: number, base: number) => {
-  // Mapping remainders greater than 9 to letters
-
-  if (number == 0) {
-    console.log("number is 0");
+  if (number === 0) {
     return "0";
   }
-  const map: any = {
-    10: "A",
-    11: "B",
-    12: "C",
-    13: "D",
-    14: "E",
-    15: "F",
-    16: "G",
-    17: "H",
-    18: "I",
-    19: "J",
-    20: "K",
-    21: "L",
-    22: "M",
-    23: "N",
-    24: "O",
-    25: "P",
-    26: "Q", // Extend as needed
-  };
 
-  // Stack to store remainders
-  const stack = [];
+  let integerPart = Math.floor(Math.abs(number));
+  let fractionalPart = Math.abs(number) - integerPart;
 
-  // Base conversion
-  while (number > 0) {
-    let remainder: number = number % base;
-    // Map remainders greater than 9 to letters
+  let integerResult = "";
+  let fractionalResult = "";
+
+  // Convert the integer part to the specified base
+  while (integerPart > 0) {
+    let remainder = integerPart % base;
+    integerPart = Math.floor(integerPart / base);
     if (remainder >= 10) {
-      stack.push(map[remainder]);
+      integerResult = map[remainder] + integerResult;
     } else {
-      stack.push(remainder);
+      integerResult = remainder + integerResult;
     }
-    number = Math.floor(number / base);
   }
 
-  // Construct the result string by popping elements from the stack
-  let result = "";
-  while (stack.length > 0) {
-    result += stack.pop();
+  // Convert the fractional part to the specified base
+  const maxPrecision = 10; // Maximum number of digits in the fractional part
+  let precision = 0;
+  while (fractionalPart > 0 && precision < maxPrecision) {
+    fractionalPart *= base;
+    let digit = Math.floor(fractionalPart);
+    fractionalResult += digit >= 10 ? map[digit] : digit;
+    fractionalPart -= digit;
+    precision++;
   }
-  console.log(result);
-  return result;
+
+  return fractionalResult === ""
+    ? integerResult
+    : integerResult + "." + fractionalResult;
 };
