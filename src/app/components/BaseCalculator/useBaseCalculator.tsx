@@ -35,25 +35,58 @@ function useBaseCalculator() {
       setError("");
     }
 
+    let neg1 = false;
+    let neg2 = false;
+
+    if (number1.charAt(0) === "-") {
+      neg1 = true;
+      number1 = number1.slice(1);
+    }
+
+    if (number2.charAt(0) === "-") {
+      neg2 = true;
+      number2 = number2.slice(1);
+    }
     const convertedToBase10Value1 = convertToBase10(number1, base);
 
     const convertedToBase10Value2 = convertToBase10(number2, base);
 
-    console.log("converted to base 10 value", convertedToBase10Value1);
-    console.log("second number converted to base 10 value", convertedToBase10Value2);
+    // console.log("converted to base 10 value", convertedToBase10Value1);
+    // console.log("second number converted to base 10 value", convertedToBase10Value2);
 
-    
-    const ans: any = calculateResult(
+    if (neg1) {
+      number1 = "-" + number1;
+    }
+
+    if (neg2) {
+      number2 = "-" + number2;
+    }
+
+    let ans: any = calculateResult(
       convertedToBase10Value1,
       operation,
       convertedToBase10Value2
     );
 
-    console.log('calculated result', ans)
+    console.log("calculated result", ans);
+    let negans = false;
 
-    const converted_ans: string = convertBase(ans, base);
+    if (ans < 0) {
+      negans = true;
+      ans = +ans
+    }
+
+    let converted_ans: any = convertBase(ans, base);
+    console.log('converted ans', converted_ans)
+
+    if (negans) {
+      converted_ans = `-${converted_ans.toString()}`;
+    }
+    
+
     setResult(converted_ans);
 
+  
     scrollToBottom();
   };
   return { generateResult, result, numberBase, error, setError };

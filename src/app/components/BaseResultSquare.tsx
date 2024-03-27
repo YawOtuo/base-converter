@@ -5,13 +5,15 @@ type Props = {
 
 function BaseResultSquare({ result, numberBase }: Props) {
   return (
-    <div className="w-full h-full min-h-[50vh] bg-yellow2 flex text-center flex-wrap items-center justify-center rounded-md cursor-pointer px-10">
-      <p className="text-4xl break-words w-full  font-semibold">
-        {result}
-        <sub>{numberBase}</sub>
-      </p>
+    <div className="w-full h-full min-h-[50vh] bg-yellow2 flex text-center  items-center justify-center rounded-md cursor-pointer px-10">
+      {result && (
+        <p className="text-4xl break-words w-full  font-semibold">
+          {result}
+          <sub>{numberBase}</sub>
+        </p>
+      )}
 
-      {!result && <p>No results yet</p> }
+      {!result && <p>No results yet</p>}
     </div>
   );
 }
