@@ -30,6 +30,7 @@ function useBaseCalculator() {
 
     if (!isValidNumber1 || !isValidNumber2) {
       setError("Invalid number for selected base");
+      setResult("");
       return;
     } else {
       setError("");
@@ -73,20 +74,18 @@ function useBaseCalculator() {
 
     if (ans < 0) {
       negans = true;
-      ans = +ans
+      ans = +ans;
     }
 
     let converted_ans: any = convertBase(ans, base);
-    console.log('converted ans', converted_ans)
+    console.log("converted ans", converted_ans);
 
     if (negans) {
       converted_ans = `-${converted_ans.toString()}`;
     }
-    
 
     setResult(converted_ans);
 
-  
     scrollToBottom();
   };
   return { generateResult, result, numberBase, error, setError };

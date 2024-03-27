@@ -12,7 +12,7 @@ export default function CustomSelect({ data, label, onChange }: Props) {
       <p className="">{label}</p>
       <Select variant="bordered" onChange={(e) => onChange(e.target.value)} label="Select an operation" className="">
         {data.map((ele : any) => (
-          <SelectItem variant="bordered" key={ele.value} value={ele.value}>
+          <SelectItem variant="bordered" className="text-black" key={ele.value} value={ele.value}>
             {ele.label}
           </SelectItem>
         ))}
