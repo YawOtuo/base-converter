@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { convertBase, convertToBase10 } from "../BaseConverter/convertBase";
+import { convertBase } from "../BaseConverter/convertBase";
 import { calculateResult } from "./calculateResult";
 import { validateNumber } from "../BaseConverter/validateNumber";
+import { convertToBase10 } from "../BaseConverter/convertToBase10";
 
 function useBaseCalculator() {
   const [result, setResult] = useState<string>();
@@ -39,11 +40,16 @@ function useBaseCalculator() {
     const convertedToBase10Value2 = convertToBase10(number2, base);
 
     console.log("converted to base 10 value", convertedToBase10Value1);
+    console.log("second number converted to base 10 value", convertedToBase10Value2);
+
+    
     const ans: any = calculateResult(
       convertedToBase10Value1,
       operation,
       convertedToBase10Value2
     );
+
+    console.log('calculated result', ans)
 
     const converted_ans: string = convertBase(ans, base);
     setResult(converted_ans);

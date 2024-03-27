@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { convertBase, convertToBase10 } from "./convertBase";
+import { convertBase } from "./convertBase";
 import { validateNumber } from "./validateNumber";
+import { convertToBase10 } from "./convertToBase10";
 
 function useBaseConverter() {
   const [result, setResult] = useState<string>();
@@ -16,9 +17,8 @@ function useBaseConverter() {
   const getAnswer = (from_base: number, number: string, to_base: number) => {
     // Define the mapping for alphanumeric characters from 10 to 26
 
-
     // Check if each digit of the number is less than the base
-    const isValidNumber = validateNumber(number, from_base)
+    const isValidNumber = validateNumber(number, from_base);
 
     if (!isValidNumber) {
       setError("Invalid number for selected base");
@@ -28,12 +28,24 @@ function useBaseConverter() {
     }
 
     setNumberBase(to_base);
+    let neg = false;
+
+    if (number.charAt(0) === "-") {
+      neg = true;
+      number = number.slice(1);
+    }
 
     const convertedToBaseTenValue = convertToBase10(number, from_base);
 
-    const ans: string = convertBase(convertedToBaseTenValue, to_base);
+    let ans: string = convertBase(convertedToBaseTenValue, to_base);
+
+    if (neg) {
+      ans = "-" + ans;
+    }
     setResult(ans);
-    console.log(convertedToBaseTenValue);
+    console.log("conveertedBase10 value, ", convertedToBaseTenValue);
+
+    console.log("final result", result);
     scrollToBottom();
   };
 

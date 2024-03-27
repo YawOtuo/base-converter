@@ -18,6 +18,8 @@ function BaseCalculator() {
     operation: Yup.string().required("Operation is required"),
     base: Yup.number()
       .min(2, "Minimum base is 2")
+      .integer("From base must be an integer")
+
       .max(26, "Maximum base is 26")
       .required("From base is required"),
   });
@@ -33,7 +35,6 @@ function BaseCalculator() {
         }}
         onSubmit={(values) => {
           values.operation = operation;
-          console.log("first");
           generateResult(
             values?.number1,
             values?.operation,

@@ -14,12 +14,16 @@ function BaseConverter() {
   const validationSchema = Yup.object().shape({
     number1: Yup.string().required("Number is required"),
     from_base: Yup.number()
+      .integer("From base must be an integer")
+
       .min(2, "Minimum base is 2")
       .max(26, "Maximum base is 26")
 
       .required("From base is required"),
 
     to_base: Yup.number()
+      .integer("From base must be an integer")
+
       .min(2, "Minimum base is 2")
       .max(26, "Maximum base is 26")
 
