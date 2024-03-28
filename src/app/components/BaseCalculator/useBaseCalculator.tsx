@@ -3,12 +3,14 @@ import { convertBase } from "../BaseConverter/convertBase";
 import { calculateResult } from "./calculateResult";
 import { validateNumber } from "../BaseConverter/validateNumber";
 import { convertToBase10 } from "../BaseConverter/convertToBase10";
+import useStoreInLC from "../useStoreInLC";
 
 function useBaseCalculator() {
   const [result, setResult] = useState<string>();
   const [loading, setLoading] = useState();
   const [numberBase, setNumberBase] = useState<number>();
   const [error, setError] = useState("");
+  const { prev, setPrev } = useStoreInLC();
 
   const scrollToBottom = () => {
     window.scrollTo({
@@ -85,6 +87,7 @@ function useBaseCalculator() {
     }
 
     setResult(converted_ans);
+
 
     scrollToBottom();
   };

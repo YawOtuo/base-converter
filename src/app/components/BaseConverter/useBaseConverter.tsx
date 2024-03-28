@@ -2,12 +2,15 @@ import { useState } from "react";
 import { convertBase } from "./convertBase";
 import { validateNumber } from "./validateNumber";
 import { convertToBase10 } from "./convertToBase10";
+import useStoreInLC from "../useStoreInLC";
 
 function useBaseConverter() {
   const [result, setResult] = useState<string>();
   const [loading, setLoading] = useState();
   const [numberBase, setNumberBase] = useState<number>();
   const [error, setError] = useState("");
+  const { prev, setPrev } = useStoreInLC();
+
   const scrollToBottom = () => {
     window.scrollTo({
       top: document.body.scrollHeight,
@@ -43,7 +46,21 @@ function useBaseConverter() {
       ans = "-" + ans;
     }
     setResult(ans);
+
     console.log("conveertedBase10 value, ", convertedToBaseTenValue);
+
+    setPrev(() => {
+      return [
+        ...prev,
+        {
+          number: number,
+          from_base: from_base,
+          answer: ans,
+          to_base: to_base,
+        }
+      ];
+    });
+    
 
     console.log("final result", result);
     scrollToBottom();
