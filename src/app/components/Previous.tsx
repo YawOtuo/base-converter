@@ -6,7 +6,7 @@ function Previous({ data }: Props) {
   return (
     <div className="w-full flex items-center justif-center px-5 py-5 border-yellow1 border-2 rounded-md">
         <div className="flex items-center justify-center gap-5 w-full">
-          <p className="text-sm w-full  font-semibold break-all">
+          <p className="text-sm w-full text-right font-semibold break-all">
             {data?.number} 
             <sub>{data?.from_base}</sub>
           </p>
